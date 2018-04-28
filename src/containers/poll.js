@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Option from '../components/option';
+import Button from '../ui/button';
 
 // type is either 'text' or 'date'
 // settings can contain 'deadline', 'multivote'
@@ -41,8 +42,13 @@ class Poll extends Component {
     this.setState({ options: opts });
   };
 
-  render() {
+  createPoll = (e) => {
+    e.preventDefault();
 
+    console.log(this.state);
+  };
+
+  render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
       return(
         <Option number={idx + 1}
@@ -55,9 +61,11 @@ class Poll extends Component {
 
     return(
       <div>
-        <textarea onChange={this.titleChanged} placeholder='Enter a poll question'/>
-        {optionsToRender}
-        <button>DONE</button>
+        <form onSubmit={this.createPoll}>
+          <textarea onChange={this.titleChanged} placeholder='Enter a poll question'/>
+          {optionsToRender}
+          <Button label='DONE'/ >
+        </form>
       </div>
     );
   }
