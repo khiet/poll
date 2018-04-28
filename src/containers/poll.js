@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Option from '../components/option';
-import Button from '../ui/button';
+import Option from '../components/Option';
+import Button from '../ui/Button';
 
 // type is either 'text' or 'date'
 // settings can contain 'deadline', 'multivote'

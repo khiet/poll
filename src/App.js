@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Poll from './containers/poll';
+import Poll from './containers/Poll';
 
 class App extends Component {
   render() {
