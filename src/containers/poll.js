@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 import Option from '../components/Option';
 import Button from '../ui/Button';
+import TextArea from '../ui/TextArea';
+
+import styles from './Poll.css';
 
 // type is either 'text' or 'date'
 // settings can contain 'deadline', 'multivote'
@@ -60,11 +63,11 @@ class Poll extends Component {
     });
 
     return(
-      <div>
+      <div className={styles.Poll}>
         <form onSubmit={this.createPoll}>
-          <textarea onChange={this.titleChanged} placeholder='Enter a poll question'/>
+          <TextArea placeholder='Enter a poll question' changed={this.titleChanged} />
           {optionsToRender}
-          <Button label='DONE'/ >
+          <Button label='DONE' />
         </form>
       </div>
     );
