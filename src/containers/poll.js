@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Option from '../components/Option';
-import Button from '../ui/Button';
-import TextArea from '../ui/TextArea';
+import Button from '../components/UI/Button/Button';
+import TextArea from '../components/UI/TextArea/TextArea';
 
 import styles from './Poll.css';
 

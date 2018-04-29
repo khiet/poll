@@ -1,14 +1,20 @@
 import React from 'react';
 
-import Input from '../ui/Input';
+import Aux from '../hoc/Aux/Aux';
+import Input from './UI/Input/Input';
 
 const Option = (props) => {
   const placeholderText = props.number + '. Enter an option';
 
   return(
-    <div>
-      <Input number={props.number} value={props.value} placeholder={placeholderText} changed={props.changed} />
-    </div>
+    <Aux>
+      <Input
+        number={props.number}
+        value={props.value}
+        placeholder={placeholderText}
+        changed={props.changed}
+      />
+    </Aux>
   );
 }
 

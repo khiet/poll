@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './App.css';
 
 import Poll from './containers/Poll';
+import Aux from './hoc/Aux/Aux';
 
 import { Switch, Route, Link } from 'react-router-dom';
 
@@ -13,10 +14,10 @@ class App extends Component {
           <Route path='/poll' component={Poll} />
           <Route path='/' render={() => {
             return(
-              <div>
+              <Aux>
                 <h1>Ready to make a poll?</h1>
                 <Link className={styles.Link} to='/poll'>CREATE POLL</Link>
-              </div>
+              </Aux>
             );
           }} />
         </Switch>
