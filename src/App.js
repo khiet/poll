@@ -15,7 +15,7 @@ class App extends Component {
             return(
               <div>
                 <h1>Ready to make a poll?</h1>
-                <Link to='/poll'>CREATE POLL</Link>
+                <Link className={styles.Link} to='/poll'>CREATE POLL</Link>
               </div>
             );
           }} />
