@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Switcher from '../components/UI/Switcher/Switcher';
 import Option from '../components/Option';
 import Button from '../components/UI/Button/Button';
 import TextArea from '../components/UI/TextArea/TextArea';
@@ -81,6 +82,7 @@ class Poll extends Component {
 
     return(
       <div className={styles.Poll}>
+        <Switcher />
         <form onSubmit={this.createPoll}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChanged} />
           {optionsToRender}

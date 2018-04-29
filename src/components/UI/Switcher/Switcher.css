@@ -1,0 +1,20 @@
+.Switcher {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Option {
+  box-sizing: border-box;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #e6e6e6;
+  border-bottom: 2px solid #e6e6e6;
+}
+
+.Active {
+  composes: Option;
+
+  font-weight: bold;
+  color: #39475d;
+  border-bottom: 2px solid #39475d;
+}

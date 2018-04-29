@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Input.css';
 
-const Input = (props) => {
+const input = (props) => {
   return(
     <input
       type='text'
@@ -13,4 +13,4 @@ const Input = (props) => {
   );
 };
 
-export default Input;
+export default input;

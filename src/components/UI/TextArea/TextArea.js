@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './TextArea.css';
 
-const TextArea = (props) => {
+const textArea = (props) => {
   return(
     <textarea className={styles.TextArea}
       onChange={props.changed}
@@ -11,4 +11,4 @@ const TextArea = (props) => {
   );
 };
 
-export default TextArea;
+export default textArea;

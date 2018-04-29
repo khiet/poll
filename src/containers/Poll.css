@@ -1,12 +1,9 @@
-.Poll form {
+.Poll {
   width: 50%;
   margin: auto;
 }
 
-.Poll form input {
-  margin: 0.5rem 0;
-}
-
-.Poll form textarea, .Poll form input, .Poll form button {
+.Poll * {
   width: 100%;
+  margin: 0.5rem 0;
 }
