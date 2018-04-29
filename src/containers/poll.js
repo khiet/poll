@@ -4,6 +4,8 @@ import Option from '../components/Option';
 import Button from '../components/UI/Button/Button';
 import TextArea from '../components/UI/TextArea/TextArea';
 
+import axios from '../axios-polls';
+
 import styles from './Poll.css';
 
 // type is either 'text' or 'date'
@@ -48,7 +50,22 @@ class Poll extends Component {
   createPoll = (e) => {
     e.preventDefault();
 
-    console.log(this.state);
+    const opts = this.state.options.filter((opt) => {
+      return opt.value !== '';
+    });
+
+    const poll = {
+      ...this.state,
+      options: opts
+    };
+
+    axios.post(
+      '/polls.json', poll
+    ).then(
+      response => console.log(response)
+    ).catch(
+      error => console.log(error)
+    );
   };
 
   render() {
