@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.App * {
+  box-sizing: border-box;
+}
+
 .Link {
   padding: 0.75rem 1.5rem;
   border: none;
@@ -10,7 +14,6 @@
   background-color: #1dcd00;
   color: white;
   border-radius: 2px;
-  box-sizing: border-box;
   text-decoration: none;
 }
 
