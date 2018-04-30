@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './App.css';
 
+import PollBuilder from './containers/PollBuilder';
 import Poll from './containers/Poll';
 import Aux from './hoc/Aux/Aux';
 
@@ -11,7 +12,8 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <Switch>
-          <Route path='/poll' component={Poll} />
+          <Route path='/poll/:id' component={Poll} />
+          <Route path='/poll' component={PollBuilder} />
           <Route path='/' render={() => {
             return(
               <Aux>

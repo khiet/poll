@@ -3,7 +3,14 @@
   margin: auto;
 }
 
-.Poll * {
-  width: 100%;
-  margin: 0.5rem 0;
+.Status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  color: #cc4b37;
+  border: 1px solid #cc4b37;
+  display: inline-block;
+}
+
+.Title {
+
 }
