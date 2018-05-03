@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://poll-10186.firebaseio.com/'
+  baseURL: process.env.REACT_APP_DATABASE_URL
 });
 
 export default instance;
