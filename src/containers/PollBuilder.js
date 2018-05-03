@@ -21,11 +21,20 @@ class PollBuilder extends Component {
       { value: '', id: 1 }
     ],
     type: 'text',
-    settings: []
+    settings: [],
+    submittable: false
+  };
+
+  // submittable
+  updateSubmittable() {
+    const submittable = (this.state.title !== '') &&
+      this.state.options.filter(e => e.value !== '').length >= 2;
+
+    this.setState({submittable: submittable});
   };
 
   titleChangedHandler = (e) => {
-    this.setState({ title: e.target.value });
+    this.setState({ title: e.target.value }, this.updateSubmittable);
   };
 
   optionChangedHandler = (id, e) => {
@@ -45,7 +54,7 @@ class PollBuilder extends Component {
       opts.push( { value: '', id: opts.length });
     }
 
-    this.setState({ options: opts });
+    this.setState({ options: opts }, this.updateSubmittable);
   };
 
   createPollHandler = (e) => {
@@ -88,7 +97,7 @@ class PollBuilder extends Component {
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />
           {optionsToRender}
-          <Button label='DONE' />
+          <Button label='DONE' disabled={!this.state.submittable} />
         </form>
       </div>
     );
