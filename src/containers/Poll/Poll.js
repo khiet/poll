@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import styles from './Poll.css';
-import PollOption from '../components/PollOption/PollOption';
-import Button from '../components/UI/Button/Button';
-import axios from '../axios-polls';
+import VoteOption from '../../components/VoteOption/VoteOption';
+import Button from '../../components/UI/Button/Button';
+import axios from '../../axios-polls';
 
 class Poll extends Component {
 
@@ -37,7 +37,7 @@ class Poll extends Component {
     this.setState({selectedOption: e.target.value, votable: true});
   };
 
-  createVouteHandler = (e) => {
+  createVoteHandler = (e) => {
     e.preventDefault();
 
     const vote = {
@@ -59,14 +59,17 @@ class Poll extends Component {
   render() {
 
     const options = this.state.options.map((opt) => {
-      return <PollOption key={opt.value} group='vote' title={opt.value} total={888} changed={this.optionSelectedHandler} />;
+      return <VoteOption key={opt.value} group='vote' title={opt.value} total={888} changed={this.optionSelectedHandler} />;
     });
 
     return(
       <div className={styles.Poll}>
         <h5 className={styles.Status}>Open</h5>
+        <div>
+          Poll ID: {this.state.pollId}
+        </div>
         <h1>{this.state.title}</h1>
-        <form onSubmit={this.createVouteHandler}>
+        <form onSubmit={this.createVoteHandler}>
           {options}
           <Button label='VOTE' disabled={!this.state.votable} />
         </form>

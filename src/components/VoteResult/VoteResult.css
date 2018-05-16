@@ -1,0 +1,12 @@
+.VoteResult {
+  display: flex;
+  justify-content: space-between;
+}
+
+.VoteOption {
+  font-size: 2rem;
+}
+
+.VoteTotal {
+  font-size: 2rem;
+}

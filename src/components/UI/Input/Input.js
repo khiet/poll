@@ -4,7 +4,7 @@ import styles from './Input.css';
 const input = (props) => {
   return(
     <input
-      type='text'
+      type={props.inputType}
       className={styles.Input}
       value={props.value}
       placeholder={props.placeholder}

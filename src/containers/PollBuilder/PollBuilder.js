@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import Switcher from '../components/UI/Switcher/Switcher';
-import Option from '../components/Option';
-import Button from '../components/UI/Button/Button';
-import TextArea from '../components/UI/TextArea/TextArea';
+import Switcher from '../../components/UI/Switcher/Switcher';
+import PollOption from '../../components/PollOption';
+import Button from '../../components/UI/Button/Button';
+import TextArea from '../../components/UI/TextArea/TextArea';
 
-import axios from '../axios-polls';
+import axios from '../../axios-polls';
 
 import styles from './PollBuilder.css';
 
@@ -46,11 +46,11 @@ class PollBuilder extends Component {
       }
     });
 
-    const needAnotherOption = opts.every((e) => {
+    const needAnotherPollOption = opts.every((e) => {
       return e.value !== '';
     });
 
-    if (needAnotherOption) {
+    if (needAnotherPollOption) {
       opts.push( { value: '', id: opts.length });
     }
 
@@ -83,7 +83,7 @@ class PollBuilder extends Component {
   render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
       return(
-        <Option number={idx + 1}
+        <PollOption number={idx + 1}
           value={this.state.options[idx].value}
           changed={(e) => this.optionChangedHandler(opt.id, e)}
           key={opt.id}
