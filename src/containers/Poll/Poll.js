@@ -48,7 +48,23 @@ class Poll extends Component {
     axios.post(
       '/votes.json', vote
     ).then((response) => {
-      console.log(response);
+
+      const opts = this.state.options.map((opt) => {
+        if (opt.value === vote.value) {
+          opt['total'] += 1;
+        }
+
+        return opt;
+      });
+
+      axios.put(
+        '/polls/' + this.state.pollId + '/options.json', opts
+      ).then((response) => {
+        this.props.history.push('/poll/' + this.state.pollId + '/result');
+      }).catch(
+        error => console.log(error)
+      );
+
     }).catch(
       error => console.log(error)
     );
@@ -59,7 +75,7 @@ class Poll extends Component {
   render() {
 
     const options = this.state.options.map((opt) => {
-      return <VoteOption key={opt.value} group='vote' title={opt.value} total={888} changed={this.optionSelectedHandler} />;
+      return <VoteOption key={opt.value} group='vote' title={opt.value} total={opt.total} changed={this.optionSelectedHandler} />;
     });
 
     return(

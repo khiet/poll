@@ -8,40 +8,33 @@ class PollResult extends Component {
   state = {
     pollId: '',
     title: '',
-    results: {}
+    options: []
   }
 
   componentDidMount() {
     const pollId = this.props.match.params.id;
 
     axios.get(
-      '/votes.json?orderBy="pollId"&equalTo="' + pollId + '"'
+      '/polls/' + pollId + '.json'
     ).then((response) => {
-      const results = {};
+      const ttl  = response.data.title;
+      const opts = response.data.options;
 
-      const votes = Object.values(response.data);
-      votes.forEach((item) => {
-        if (results[item.value] !== undefined) {
-          results[item.value] += 1;
-        } else {
-          results[item.value] = 1;
-        }
-      });
-
-      this.setState({results: results, pollId: pollId});
+      this.setState({title: ttl, options: opts, pollId: pollId});
     }).catch(
       error => console.log(error)
     );
   }
 
   render() {
-    const voteResults = Object.keys(this.state.results).map((k) => {
-      return <VoteResult key={k} option={k} total={this.state.results[k]} />;
+    const voteResults = this.state.options.map((opt) => {
+      return <VoteResult key={opt.value} option={opt.value} total={opt.total} />;
     });
 
     return(
       <div className={styles.PollResult}>
         <h1>Poll Result</h1>
+        <h2>{this.state.title}</h2>
         {voteResults}
       </div>
     );

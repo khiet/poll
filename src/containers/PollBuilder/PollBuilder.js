@@ -64,6 +64,11 @@ class PollBuilder extends Component {
       return opt.value !== '';
     });
 
+    // set all total to zero
+    opts.forEach((opt) => {
+      opt['total'] = 0;
+    });
+
     const poll = {
       ...this.state,
       options: opts
