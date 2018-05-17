@@ -11,22 +11,31 @@ class Poll extends Component {
     pollId: '',
     title: '',
     options: [],
+    participantCount: 0,
     selectedOption: null,
-    votable: false
+    votable: false,
+    voted: false
   }
 
   componentDidMount() {
+    console.log('mounted');
     const pollId = this.props.match.params.id;
 
     axios.get(
       '/polls/' + pollId + '.json'
     ).then((response) => {
-      console.log(response);
-
-      const ttl = response.data.title;
+      const ttl  = response.data.title;
       const opts = response.data.options;
+      const participantCnt = this.getParticipantCount(opts);
 
-      this.setState({title: ttl, options: opts, pollId: pollId});
+      this.setState(
+        {
+          pollId: pollId,
+          title: ttl,
+          options: opts,
+          participantCount: participantCnt
+        }
+      );
 
     }).catch(
       error => console.log(error)
@@ -40,8 +49,9 @@ class Poll extends Component {
   createVoteHandler = (e) => {
     e.preventDefault();
 
+    const pollId = this.state.pollId;
     const vote = {
-      pollId: this.state.pollId,
+      pollId: pollId,
       value: this.state.selectedOption
     };
 
@@ -58,9 +68,11 @@ class Poll extends Component {
       });
 
       axios.put(
-        '/polls/' + this.state.pollId + '/options.json', opts
+        '/polls/' + pollId + '/options.json', opts
       ).then((response) => {
-        this.props.history.push('/poll/' + this.state.pollId + '/result');
+        const participantCnt = this.getParticipantCount(opts);
+        this.setState({participantCount: participantCnt, voted: true, votable: false});
+        this.props.history.push('/poll/' + pollId + '/result');
       }).catch(
         error => console.log(error)
       );
@@ -68,8 +80,20 @@ class Poll extends Component {
     }).catch(
       error => console.log(error)
     );
+  };
 
-    console.log(this.state.selectedOption);
+  createVoteAgainHandler = (e) => {
+    e.preventDefault();
+
+    console.log('createVoteAgainHandler: ' + this.state.selectedOption);
+  };
+
+  getParticipantCount = (pollOptions) => {
+    return pollOptions.map((opt) => {
+      return opt['total'];
+    }).reduce((acc, val) => {
+      return acc + val;
+    });
   };
 
   render() {
@@ -78,16 +102,28 @@ class Poll extends Component {
       return <VoteOption key={opt.value} group='vote' title={opt.value} total={opt.total} changed={this.optionSelectedHandler} />;
     });
 
+    let voteButton = null;
+    if (this.state.voted) {
+      voteButton = <Button label='VOTE AGAIN' disabled={!this.state.votable} clicked={this.createVoteAgainHandler} />;
+    } else {
+      voteButton = <Button label='VOTE' disabled={!this.state.votable} clicked={this.createVoteHandler} />;
+    }
+
     return(
       <div className={styles.Poll}>
-        <h5 className={styles.Status}>Open</h5>
-        <div>
-          Poll ID: {this.state.pollId}
+        <div className={styles.Status}>Open</div>
+        <h1 className={styles.Title}>
+          {this.state.title}
+        </h1>
+        <div className={styles.CreatedBy}>
+          Created by Khiet
         </div>
-        <h1>{this.state.title}</h1>
-        <form onSubmit={this.createVoteHandler}>
+        <div className={styles.ParticipantCount}>
+          {this.state.participantCount} participants
+        </div>
+        <form className={styles.Form}>
           {options}
-          <Button label='VOTE' disabled={!this.state.votable} />
+          {voteButton}
         </form>
       </div>
     );

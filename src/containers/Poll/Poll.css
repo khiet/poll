@@ -1,16 +1,41 @@
 .Poll {
   width: 50%;
   margin: auto;
+  text-align: center;
+  padding: 1rem;
 }
 
 .Status {
-  padding: 0.25rem 0.5rem;
-  border-radius: 1rem;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  font-size: 1.5rem;
   color: #cc4b37;
   border: 1px solid #cc4b37;
-  display: inline-block;
 }
 
 .Title {
+  margin: 1rem 0;
+}
 
+.CreatedBy {
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #bbb;
+}
+
+.ParticipantCount {
+  display: inline-block;
+  margin: 1rem 0;
+  border: 1px solid #bbb;
+  color: #bbb;
+  padding: 0.5rem 1rem;
+}
+
+.Form {
+  margin-top: 4rem;
+}
+
+.Form button {
+  margin-top: 2rem;
 }
