@@ -12,7 +12,7 @@ const voteOption = (props) => {
         onChange={props.changed}
       />
 
-      <label htmlFor={props.title}>
+      <label className={styles.VoteLabel} htmlFor={props.title}>
         {props.title}
       </label>
       <span className={styles.Result}>

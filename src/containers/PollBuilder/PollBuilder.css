@@ -5,5 +5,12 @@
 
 .PollBuilder * {
   width: 100%;
+}
+
+.PollBuilder form {
+  margin-top: 1rem;
+}
+
+.PollBuilder form * {
   margin: 0.5rem 0;
 }
