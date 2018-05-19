@@ -4,6 +4,7 @@ import Switcher from '../../components/UI/Switcher/Switcher';
 import PollOption from '../../components/PollOption';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios-polls';
 
@@ -35,6 +36,7 @@ class PollBuilder extends Component {
 
   titleChangedHandler = (e) => {
     this.setState({ title: e.target.value }, this.updateSubmittable);
+    console.log(this.state.foo);
   };
 
   optionChangedHandler = (id, e) => {
@@ -81,7 +83,9 @@ class PollBuilder extends Component {
 
       this.props.history.push('/poll/' + response.data.name);
     }).catch(
-      error => console.log(error)
+      error => {
+        this.setState({error: true});
+      }
     );
   };
 
@@ -109,4 +113,4 @@ class PollBuilder extends Component {
   }
 }
 
-export default PollBuilder;
+export default withErrorHandler(PollBuilder, axios);
