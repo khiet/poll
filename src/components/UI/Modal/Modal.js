@@ -4,12 +4,19 @@ import Backdrop from '../Backdrop/Backdrop';
 import Aux from '../../../hoc/Aux/Aux';
 
 const modal = (props) => {
-  return(
-    <Aux>
-      <Backdrop />
-      <div className={styles.Modal}>
+  let modalToDisplay = null;
+  if (props.show) {
+    modalToDisplay = (
+      <div className={styles.Modal} onClick={props.clicked}>
         {props.children}
       </div>
+    );
+  }
+
+  return(
+    <Aux>
+      <Backdrop show={props.show} clicked={props.clicked} />
+      {modalToDisplay}
     </Aux>
   );
 };

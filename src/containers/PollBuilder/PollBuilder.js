@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Switcher from '../../components/UI/Switcher/Switcher';
-import PollOption from '../../components/PollOption';
+import PollOption from '../../components/PollOption/PollOption';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -36,7 +36,6 @@ class PollBuilder extends Component {
 
   titleChangedHandler = (e) => {
     this.setState({ title: e.target.value }, this.updateSubmittable);
-    console.log(this.state.foo);
   };
 
   optionChangedHandler = (id, e) => {
@@ -79,13 +78,11 @@ class PollBuilder extends Component {
     axios.post(
       '/polls.json', poll
     ).then((response) => {
-      console.log(response);
-
-      this.props.history.push('/poll/' + response.data.name);
-    }).catch(
-      error => {
-        this.setState({error: true});
+      if (response) {
+        this.props.history.push('/poll/' + response.data.name);
       }
+    }).catch(
+      error => console.log(error)
     );
   };
 

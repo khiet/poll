@@ -18,7 +18,6 @@ class Poll extends Component {
   }
 
   componentDidMount() {
-    console.log('mounted');
     const pollId = this.props.match.params.id;
 
     axios.get(
