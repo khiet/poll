@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from './UI/Input/Input';
+import Input from '../UI/Input/Input';
 
 const pollOption = (props) => {
   const placeholderText = props.number + '. Enter an option';
