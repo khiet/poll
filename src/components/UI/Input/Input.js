@@ -9,6 +9,8 @@ const input = (props) => {
       value={props.value}
       placeholder={props.placeholder}
       onChange={props.changed}
+      onFocus={props.focused}
+      onBlur={props.blured}
     />
   );
 };

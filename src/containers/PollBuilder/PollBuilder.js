@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
+import PollOption from '../PollOption/PollOption';
 import Switcher from '../../components/UI/Switcher/Switcher';
-import PollOption from '../../components/PollOption/PollOption';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -10,13 +10,12 @@ import axios from '../../axios-polls';
 
 import styles from './PollBuilder.css';
 
-// type is either 'text' or 'date'
 // settings can contain 'deadline', 'multivote'
-
+// id is a random ID so that options reset on type change
 class PollBuilder extends Component {
 
   state = {
-    title: null,
+    title: '',
     options: [
       { value: '', id: 0 },
       { value: '', id: 1 }
@@ -28,7 +27,7 @@ class PollBuilder extends Component {
 
   // submittable
   updateSubmittable() {
-    const submittable = (this.state.title !== '') &&
+    const submittable = (this.state.title) &&
       this.state.options.filter(e => e.value !== '').length >= 2;
 
     this.setState({submittable: submittable});
@@ -38,21 +37,21 @@ class PollBuilder extends Component {
     this.setState({ title: e.target.value }, this.updateSubmittable);
   };
 
-  optionChangedHandler = (id, e) => {
+  optionChangedHandler = (id, value) => {
     const opts = this.state.options.map((opt) => {
       if (id === opt.id) {
-        return { value: e.target.value, id: id };
+        return { value: value, id: id };
       } else {
         return opt;
       }
     });
 
-    const needAnotherPollOption = opts.every((e) => {
-      return e.value !== '';
+    const needAnotherPollOption = opts.every((opt) => {
+      return opt.value !== '';
     });
 
     if (needAnotherPollOption) {
-      opts.push( { value: '', id: opts.length });
+      opts.push({ value: '', id: this.randomId() });
     }
 
     this.setState({ options: opts }, this.updateSubmittable);
@@ -86,20 +85,47 @@ class PollBuilder extends Component {
     );
   };
 
+  switchTypeHandler = (type) => {
+    const opts = [
+      { value: '', id: this.randomId() },
+      { value: '', id: this.randomId() }
+    ];
+
+    this.setState({type: type, options: opts});
+  };
+
+  randomId = () => {
+    return Math.floor(Math.random() * 1000000);
+  }
+
+  componenttDidMount() {
+    console.log('componenttDidMount');
+  }
+
   render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
+
+      let placeholder = '';
+      if (this.state.type === 'text') {
+        placeholder = (idx + 1) + '. Enter an option';
+      } else if (this.state.type === 'date') {
+        placeholder = (idx + 1) + '. Enter a date';
+      }
+
       return(
-        <PollOption number={idx + 1}
-          value={this.state.options[idx].value}
-          changed={(e) => this.optionChangedHandler(opt.id, e)}
+        <PollOption
+          number={idx + 1}
           key={opt.id}
+          pollType={this.state.type}
+          placeholder={placeholder}
+          onOptionValueChange={(value) => this.optionChangedHandler(opt.id, value)}
         />
       );
     });
 
     return(
       <div className={styles.PollBuilder}>
-        <Switcher />
+        <Switcher clicked={this.switchTypeHandler} selectedType={this.state.type} />
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />
           {optionsToRender}
