@@ -88,6 +88,10 @@ class PollBuilder extends Component {
     );
   };
 
+  switchTypeHandler = (type) => {
+    this.setState({type: type});
+  };
+
   dateSelectedHandler = (day) => {
     console.log(day);
   };
@@ -105,8 +109,8 @@ class PollBuilder extends Component {
 
     return(
       <div className={styles.PollBuilder}>
-        <DatePicker clicked={this.dateSelectedHandler}/>
-        <Switcher />
+        <DatePicker clicked={this.dateSelectedHandler} />
+        <Switcher clicked={this.switchTypeHandler} selectedType={this.state.type} />
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />
           {optionsToRender}
