@@ -10,11 +10,7 @@ import axios from '../../axios-polls';
 
 import styles from './PollBuilder.css';
 
-import DatePicker from '../../components/DatePicker/DatePicker';
-
-// type is either 'text' or 'date'
 // settings can contain 'deadline', 'multivote'
-
 class PollBuilder extends Component {
 
   state = {
@@ -92,10 +88,6 @@ class PollBuilder extends Component {
     this.setState({type: type});
   };
 
-  dateSelectedHandler = (day) => {
-    console.log(day);
-  };
-
   render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
       return(
@@ -110,7 +102,6 @@ class PollBuilder extends Component {
 
     return(
       <div className={styles.PollBuilder}>
-        <DatePicker clicked={this.dateSelectedHandler} />
         <Switcher clicked={this.switchTypeHandler} selectedType={this.state.type} />
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />
