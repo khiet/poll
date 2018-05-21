@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
+import PollOption from '../PollOption/PollOption';
 import Switcher from '../../components/UI/Switcher/Switcher';
-import PollOption from '../../components/PollOption/PollOption';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
