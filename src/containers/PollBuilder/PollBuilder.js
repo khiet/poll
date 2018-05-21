@@ -10,8 +10,7 @@ import axios from '../../axios-polls';
 
 import styles from './PollBuilder.css';
 
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import DatePicker from '../../components/DatePicker/DatePicker';
 
 // type is either 'text' or 'date'
 // settings can contain 'deadline', 'multivote'
@@ -102,7 +101,7 @@ class PollBuilder extends Component {
 
     return(
       <div className={styles.PollBuilder}>
-        <DayPicker />
+        <DatePicker />
         <Switcher />
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />
