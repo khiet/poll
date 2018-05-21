@@ -88,6 +88,10 @@ class PollBuilder extends Component {
     );
   };
 
+  dateSelectedHandler = (day) => {
+    console.log(day);
+  };
+
   render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
       return(
@@ -101,7 +105,7 @@ class PollBuilder extends Component {
 
     return(
       <div className={styles.PollBuilder}>
-        <DatePicker />
+        <DatePicker clicked={this.dateSelectedHandler}/>
         <Switcher />
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />

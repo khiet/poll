@@ -121,11 +121,6 @@
   vertical-align: middle;
 }
 
-.DayPicker-Day:hover {
-  background-color: rgba(29, 205, 0, 0.25);
-  border-radius: 50%;
-}
-
 .DayPicker-WeekNumber {
   display: table-cell;
   padding: 0.5rem;
@@ -197,6 +192,6 @@
 
 .DayPicker:not(.DayPicker--interactionDisabled)
 .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-  background-color: #f0f8ff;
+  background-color: rgba(29, 205, 0, 0.25);
   border-radius: 50%;
 }

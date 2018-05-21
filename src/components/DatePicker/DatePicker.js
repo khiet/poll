@@ -34,7 +34,12 @@ const defaultClassnames = {
 };
 
 const datePicker = (props) => {
-    return <DayPicker classNames={defaultClassnames} />;
+  return(
+    <DayPicker
+      classNames={defaultClassnames}
+      onDayClick={props.clicked}
+    />
+  );
 };
 
 export default datePicker;
