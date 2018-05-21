@@ -3,7 +3,13 @@ import React from 'react';
 import Input from '../UI/Input/Input';
 
 const pollOption = (props) => {
-  const placeholderText = props.number + '. Enter an option';
+  let placeholderText = null;
+
+  if (props.pollType === 'text') {
+    placeholderText = props.number + '. Enter an option';
+  } else if (props.pollType === 'date') {
+    placeholderText = props.number + '. Enter a date';
+  }
 
   return(
     <Input

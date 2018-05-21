@@ -103,6 +103,7 @@ class PollBuilder extends Component {
           value={this.state.options[idx].value}
           changed={(e) => this.optionChangedHandler(opt.id, e)}
           key={opt.id}
+          pollType={this.state.type}
         />
       );
     });
