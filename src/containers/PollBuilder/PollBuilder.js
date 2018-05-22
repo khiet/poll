@@ -91,7 +91,8 @@ class PollBuilder extends Component {
   render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
       return(
-        <PollOption number={idx + 1}
+        <PollOption
+          number={idx + 1}
           value={this.state.options[idx].value}
           changed={(e) => this.optionChangedHandler(opt.id, e)}
           key={opt.id}

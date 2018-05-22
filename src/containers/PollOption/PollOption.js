@@ -7,12 +7,25 @@ import DatePicker from '../../components/DatePicker/DatePicker';
 
 class PollOption extends Component {
 
+  state = {
+    showDate: false,
+    selectedDay: null
+  }
+
   showDatePickerHandler = () => {
-    console.log('showDatePickerHandler');
+    if (this.props.pollType === 'date') {
+      this.setState({showDate: true});
+    }
+  };
+
+  hideDatePickerHandler = () => {
+    // if (this.props.pollType === 'date') {
+    //   this.setState({showDate: false});
+    // }
   };
 
   dateSelectedHandler = (day) => {
-    console.log(day);
+    this.setState({selectedDay: day});
   };
 
   render() {
@@ -24,14 +37,20 @@ class PollOption extends Component {
       placeholderText = this.props.number + '. Enter a date';
     }
 
+    let datePicker = null;
+    if (this.state.showDate) {
+      datePicker = <DatePicker clicked={this.dateSelectedHandler} />;
+    }
+
     return(
       <Aux>
-        <DatePicker clicked={this.dateSelectedHandler} />
+        {datePicker}
         <Input
           inputType='text'
-          value={this.props.value}
+          value={this.state.selectedDay ? this.state.selectedDay.toLocaleDateString() : this.props.value}
           changed={this.props.changed}
           focused={this.showDatePickerHandler}
+          blured={this.hideDatePickerHandler}
           placeholder={placeholderText}
         />
       </Aux>

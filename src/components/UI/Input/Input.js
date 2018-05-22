@@ -10,6 +10,7 @@ const input = (props) => {
       placeholder={props.placeholder}
       onChange={props.changed}
       onFocus={props.focused}
+      onBlur={props.blured}
     />
   );
 };
