@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+
 import styles from './Auth.css';
-import axios from '../../axios-polls';
+import axios from 'axios';
 
 class Auth extends Component {
 
@@ -25,7 +27,19 @@ class Auth extends Component {
   };
 
   signupUser = (email, password) => {
-    console.log('signup', email, password);
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true
+    };
+
+    axios.post(
+      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.REACT_APP_FIREBASE_API_KEY, authData
+    ).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   loginUser = (email, password) => {
@@ -58,7 +72,7 @@ class Auth extends Component {
     return(
       <div className={styles.Auth}>
         <form onSubmit={this.authenticateUser}>
-          <Input inputType='text'
+          <Input inputType='email'
             placeholder='Email'
             value={this.state.email}
             changed={this.emailChangedHandler}
@@ -82,4 +96,4 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+export default withErrorHandler(Auth, axios);
