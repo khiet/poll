@@ -10,7 +10,8 @@ class Auth extends Component {
   state = {
     email: '',
     password: '',
-    signUp: true
+    signUp: true,
+    submittable: false
   }
 
   authenticateUser = (e) => {
@@ -45,6 +46,14 @@ class Auth extends Component {
     this.setState({signUp: !this.state.signUp});
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const submittable = (this.state.email !== '' && this.state.password !== '');
+
+    if ((!this.state.submittable && submittable) || (this.state.submittable && !submittable)) {
+      this.setState({submittable: submittable});
+    }
+  }
+
   render() {
     return(
       <div className={styles.Auth}>
@@ -60,7 +69,7 @@ class Auth extends Component {
             value={this.state.password}
             changed={this.passwordChangedHandler}
           />
-          <Button label={this.state.signUp ? 'Sign Up' : 'Log In' } />
+          <Button label={this.state.signUp ? 'Sign Up' : 'Log In' } disabled={!this.state.submittable} />
         </form>
         <div className={styles.SwitchAuth}>
           {this.state.signUp ? 'Already have an account?' : 'Do not have an account yet?' }
