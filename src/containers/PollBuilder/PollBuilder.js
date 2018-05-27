@@ -5,6 +5,8 @@ import Switcher from '../../components/UI/Switcher/Switcher';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import Modal from '../../components/UI/Modal/Modal';
+import Auth from '../Auth/Auth';
 
 import axios from '../../axios-polls';
 
@@ -131,6 +133,9 @@ class PollBuilder extends Component {
           {optionsToRender}
           <Button label='DONE' disabled={!this.state.submittable} />
         </form>
+        <Modal show>
+          <Auth />
+        </Modal>
       </div>
     );
   }
