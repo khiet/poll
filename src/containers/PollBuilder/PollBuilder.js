@@ -24,7 +24,8 @@ class PollBuilder extends Component {
     ],
     type: 'text',
     settings: [],
-    submittable: false
+    submittable: false,
+    isAuthenticated: true,
   };
 
   // submittable
@@ -133,7 +134,7 @@ class PollBuilder extends Component {
           {optionsToRender}
           <Button label='DONE' disabled={!this.state.submittable} />
         </form>
-        <Modal show>
+        <Modal show={!this.state.isAuthenticated}>
           <Auth />
         </Modal>
       </div>

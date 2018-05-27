@@ -1,5 +1,5 @@
-.Auth {
-
+.Auth input {
+  margin-bottom: 1rem;
 }
 
 .SwitchAuth {
@@ -8,5 +8,6 @@
 }
 
 .SwitchAuthLink {
+  margin-top: 0.5rem;
   color: #39475d;
 }
