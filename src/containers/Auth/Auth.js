@@ -43,7 +43,19 @@ class Auth extends Component {
   };
 
   loginUser = (email, password) => {
-    console.log('login', email, password);
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true
+    };
+
+    axios.post(
+      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + process.env.REACT_APP_FIREBASE_API_KEY, authData
+    ).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   emailChangedHandler = (e) => {
