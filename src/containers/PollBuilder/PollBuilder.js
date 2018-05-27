@@ -28,16 +28,8 @@ class PollBuilder extends Component {
     isAuthenticated: true,
   };
 
-  // submittable
-  updateSubmittable() {
-    const submittable = (this.state.title) &&
-      this.state.options.filter(e => e.value !== '').length >= 2;
-
-    this.setState({submittable: submittable});
-  };
-
   titleChangedHandler = (e) => {
-    this.setState({ title: e.target.value }, this.updateSubmittable);
+    this.setState({ title: e.target.value });
   };
 
   optionChangedHandler = (id, value) => {
@@ -57,7 +49,7 @@ class PollBuilder extends Component {
       opts.push({ value: '', id: this.randomId() });
     }
 
-    this.setState({ options: opts }, this.updateSubmittable);
+    this.setState({ options: opts });
   };
 
   createPollHandler = (e) => {
@@ -103,6 +95,15 @@ class PollBuilder extends Component {
 
   componenttDidMount() {
     console.log('componenttDidMount');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate');
+
+    const submittable = (this.state.title) && this.state.options.filter(e => e.value !== '').length >= 2;
+    if ((!this.state.submittable && submittable) || (this.state.submittable && !submittable)) {
+      this.setState({submittable: submittable});
+    }
   }
 
   render() {
