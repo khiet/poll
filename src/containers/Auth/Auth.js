@@ -36,7 +36,11 @@ class Auth extends Component {
     axios.post(
       'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.REACT_APP_FIREBASE_API_KEY, authData
     ).then((res) => {
-      console.log(res);
+      const expiryDate = new Date(new Date().getTime() + (res.data.expiresIn * 1000));
+      localStorage.setItem('token', res.data.idToken);
+      localStorage.setItem('expiryDate', expiryDate);
+      localStorage.setItem('userId', res.data.localId);
+
     }).catch((err) => {
       console.log(err);
     });
@@ -52,7 +56,11 @@ class Auth extends Component {
     axios.post(
       'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + process.env.REACT_APP_FIREBASE_API_KEY, authData
     ).then((res) => {
-      console.log(res);
+      const expiryDate = new Date(new Date().getTime() + (res.data.expiresIn * 1000));
+      localStorage.setItem('token', res.data.idToken);
+      localStorage.setItem('expiryDate', expiryDate);
+      localStorage.setItem('userId', res.data.localId);
+
     }).catch((err) => {
       console.log(err);
     });
