@@ -4,6 +4,7 @@ import styles from './Poll.css';
 import VoteOption from '../../components/VoteOption/VoteOption';
 import Button from '../../components/UI/Button/Button';
 import axios from '../../axios-polls';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Poll extends Component {
 
@@ -129,4 +130,4 @@ class Poll extends Component {
   }
 }
 
-export default Poll;
+export default withErrorHandler(Poll, axios);
