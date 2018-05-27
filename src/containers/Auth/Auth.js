@@ -83,7 +83,7 @@ class Auth extends Component {
   componentDidUpdate(prevProps, prevState) {
     const submittable = (this.state.email !== '' && this.state.password !== '');
 
-    if ((!this.state.submittable && submittable) || (this.state.submittable && !submittable)) {
+    if (prevState.submittable !== submittable) {
       this.setState({submittable: submittable});
     }
   }

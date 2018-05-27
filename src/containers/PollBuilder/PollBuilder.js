@@ -93,15 +93,9 @@ class PollBuilder extends Component {
     return Math.floor(Math.random() * 1000000);
   }
 
-  componenttDidMount() {
-    console.log('componenttDidMount');
-  }
-
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate');
-
     const submittable = (this.state.title) && this.state.options.filter(e => e.value !== '').length >= 2;
-    if ((!this.state.submittable && submittable) || (this.state.submittable && !submittable)) {
+    if (prevState.submittable !== submittable) {
       this.setState({submittable: submittable});
     }
   }
