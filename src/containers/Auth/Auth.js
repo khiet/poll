@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-
 import styles from './Auth.css';
 import axios from 'axios';
 
@@ -116,4 +114,4 @@ class Auth extends Component {
   }
 }
 
-export default withErrorHandler(Auth, axios);
+export default Auth;

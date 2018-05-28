@@ -24,8 +24,7 @@ class PollBuilder extends Component {
     ],
     type: 'text',
     settings: [],
-    submittable: false,
-    isAuthenticated: true,
+    submittable: false
   };
 
   titleChangedHandler = (e) => {
@@ -72,13 +71,13 @@ class PollBuilder extends Component {
     const token = localStorage.getItem('token');
     axios.post(
       '/polls.json?auth=' + token, poll
-    ).then((response) => {
-      if (response) {
-        this.props.history.push('/polls/' + response.data.name);
+    ).then((res) => {
+      if (res && res.status === 200) {
+        this.props.history.push('/polls/' + res.data.name);
       }
-    }).catch(
-      error => console.log(error)
-    );
+    }).catch((err) => {
+      console.log('err: ', err);
+    });
   };
 
   switchTypeHandler = (type) => {
@@ -130,7 +129,7 @@ class PollBuilder extends Component {
           {optionsToRender}
           <Button label='DONE' disabled={!this.state.submittable} />
         </form>
-        <Modal show={!this.state.isAuthenticated}>
+        <Modal show={false}>
           <Auth />
         </Modal>
       </div>
