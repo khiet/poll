@@ -16,15 +16,15 @@ class App extends Component {
         <Navigation title='Create poll' />
 
         <Switch>
-          <Route path='/poll/:id/result' component={Poll} />
-          <Route path='/poll/:id' component={Poll} />
-          <Route path='/poll' component={PollBuilder} />
+          <Route path='/polls/:id/result' component={Poll} />
+          <Route path='/polls/:id' component={Poll} />
+          <Route path='/polls' component={PollBuilder} />
           <Route path='/' render={() => {
             return(
               <Aux>
                 <img src={pandaImage} alt='panda' />
                 <h1>Ready to make a poll?</h1>
-                <Link className={styles.Link} to='/poll'>CREATE POLL</Link>
+                <Link className={styles.Link} to='/polls'>CREATE POLL</Link>
               </Aux>
             );
           }} />

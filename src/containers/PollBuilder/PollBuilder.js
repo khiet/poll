@@ -69,11 +69,12 @@ class PollBuilder extends Component {
       options: opts
     };
 
+    const token = localStorage.getItem('token');
     axios.post(
-      '/polls.json', poll
+      '/polls.json?auth=' + token, poll
     ).then((response) => {
       if (response) {
-        this.props.history.push('/poll/' + response.data.name);
+        this.props.history.push('/polls/' + response.data.name);
       }
     }).catch(
       error => console.log(error)

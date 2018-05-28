@@ -72,7 +72,7 @@ class Poll extends Component {
       ).then((response) => {
         const participantCnt = this.getParticipantCount(opts);
         this.setState({participantCount: participantCnt, voted: true, votable: false});
-        this.props.history.push('/poll/' + pollId + '/result');
+        this.props.history.push('/polls/' + pollId + '/result');
       }).catch(
         error => console.log(error)
       );
