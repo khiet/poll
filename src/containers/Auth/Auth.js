@@ -39,6 +39,9 @@ class Auth extends Component {
       localStorage.setItem('expiryDate', expiryDate);
       localStorage.setItem('userId', res.data.localId);
 
+      if (this.props.authSuccess) {
+        this.props.authSuccess();
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -59,6 +62,9 @@ class Auth extends Component {
       localStorage.setItem('expiryDate', expiryDate);
       localStorage.setItem('userId', res.data.localId);
 
+      if (this.props.authSuccess) {
+        this.props.authSuccess();
+      }
     }).catch((err) => {
       console.log(err);
     });
