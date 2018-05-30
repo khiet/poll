@@ -8,6 +8,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Modal from '../../components/UI/Modal/Modal';
 import Auth from '../Auth/Auth';
 
+import * as navigationTitles from '../../components/Navigation/NavigationTitles';
+
 import axios from '../../axios-polls';
 
 import styles from './PollBuilder.css';
@@ -73,7 +75,11 @@ class PollBuilder extends Component {
       '/polls.json?auth=' + token, poll
     ).then((res) => {
       if (res && res.status === 200) {
-        this.props.history.push('/polls/' + res.data.name);
+        const location = {
+          pathname: '/polls/' + res.data.name,
+          state: { title: navigationTitles.VOTE }
+        };
+        this.props.history.push(location);
       }
     }).catch((err) => {
       console.log('err: ', err);

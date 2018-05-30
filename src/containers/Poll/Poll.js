@@ -6,6 +6,8 @@ import Button from '../../components/UI/Button/Button';
 import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
+import * as navigationTitles from '../../components/Navigation/NavigationTitles';
+
 class Poll extends Component {
 
   state = {
@@ -72,7 +74,11 @@ class Poll extends Component {
       ).then((response) => {
         const participantCnt = this.getParticipantCount(opts);
         this.setState({participantCount: participantCnt, voted: true, votable: false});
-        this.props.history.push('/polls/' + pollId + '/result');
+        const location = {
+          pathname: '/polls/' + pollId + '/result',
+          state: { title: navigationTitles.VOTE }
+        };
+        this.props.history.push(location);
       }).catch(
         error => console.log(error)
       );

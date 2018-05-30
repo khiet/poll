@@ -7,13 +7,24 @@ import Navigation from './components/Navigation/Navigation';
 import pandaImage from './assets/images/panda.png';
 import Aux from './hoc/Aux/Aux';
 
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, withRouter } from 'react-router-dom';
+
+import * as navigationTitles from './components/Navigation/NavigationTitles';
 
 class App extends Component {
   render() {
+    console.log('this.props.history: ', this.props.history);
+    console.log('this.props.location: ', this.props.location);
+    console.log('this.props.match: ', this.props.match);
+
+    let navigationTitle = navigationTitles.DEFAULT;
+    if (this.props.location.state) {
+      navigationTitle = this.props.location.state.title;
+    }
+
     return (
       <div className={styles.App}>
-        <Navigation title='Create poll' />
+        <Navigation title={navigationTitle} />
 
         <Switch>
           <Route path='/polls/:id/result' component={Poll} />
@@ -24,7 +35,12 @@ class App extends Component {
               <Aux>
                 <img src={pandaImage} alt='panda' />
                 <h1>Ready to make a poll?</h1>
-                <Link className={styles.Link} to='/polls'>CREATE POLL</Link>
+                <Link
+                  className={styles.Link}
+                  to={{pathname: '/polls', state: {title: navigationTitles.CREATE_POLL}}}
+                >
+                  CREATE POLL
+                </Link>
               </Aux>
             );
           }} />
@@ -34,4 +50,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
