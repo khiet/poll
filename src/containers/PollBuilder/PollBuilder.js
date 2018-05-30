@@ -5,6 +5,7 @@ import Switcher from '../../components/UI/Switcher/Switcher';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
 
@@ -24,7 +25,8 @@ class PollBuilder extends Component {
     ],
     type: 'text',
     settings: [],
-    submittable: false
+    submittable: false,
+    loading: false
   };
 
   titleChangedHandler = (e) => {
@@ -53,6 +55,7 @@ class PollBuilder extends Component {
 
   createPollHandler = (e) => {
     e.preventDefault();
+    this.setState({loading: true});
 
     const opts = this.state.options.filter((opt) => {
       return opt.value !== '';
@@ -72,6 +75,7 @@ class PollBuilder extends Component {
     axios.post(
       '/polls.json?auth=' + token, poll
     ).then((res) => {
+      this.setState({loading: false});
       if (res && res.status === 200) {
         const location = {
           pathname: '/polls/' + res.data.name,
@@ -80,6 +84,7 @@ class PollBuilder extends Component {
         this.props.history.push(location);
       }
     }).catch((err) => {
+      this.setState({loading: false});
       console.log('err: ', err);
     });
   };
@@ -125,6 +130,11 @@ class PollBuilder extends Component {
       );
     });
 
+    let spinner = null;
+    if (this.state.loading) {
+      spinner = <Spinner />;
+    }
+
     return(
       <div className={styles.PollBuilder}>
         <Switcher clicked={this.switchTypeHandler} selectedType={this.state.type} />
@@ -133,6 +143,7 @@ class PollBuilder extends Component {
           {optionsToRender}
           <Button label='DONE' disabled={!this.state.submittable} />
         </form>
+        {spinner}
       </div>
     );
   }

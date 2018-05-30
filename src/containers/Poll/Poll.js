@@ -6,6 +6,8 @@ import Button from '../../components/UI/Button/Button';
 import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
+
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
 
 class Poll extends Component {
@@ -17,7 +19,8 @@ class Poll extends Component {
     participantCount: 0,
     selectedOption: null,
     votable: false,
-    voted: false
+    voted: false,
+    loading: false
   }
 
   componentDidMount() {
@@ -50,6 +53,7 @@ class Poll extends Component {
 
   createVoteHandler = (e) => {
     e.preventDefault();
+    this.setState({loading: true});
 
     const pollId = this.state.pollId;
     const vote = {
@@ -60,7 +64,6 @@ class Poll extends Component {
     axios.post(
       '/votes.json', vote
     ).then((response) => {
-
       const opts = this.state.options.map((opt) => {
         if (opt.value === vote.value) {
           opt['total'] += 1;
@@ -73,19 +76,21 @@ class Poll extends Component {
         '/polls/' + pollId + '/options.json', opts
       ).then((response) => {
         const participantCnt = this.getParticipantCount(opts);
-        this.setState({participantCount: participantCnt, voted: true, votable: false});
+        this.setState({participantCount: participantCnt, voted: true, votable: false, loading: false});
         const location = {
           pathname: '/polls/' + pollId + '/result',
           state: { title: navigationTitles.VOTE }
         };
         this.props.history.push(location);
-      }).catch(
-        error => console.log(error)
-      );
+      }).catch((err) => {
+        this.setState({loading: false});
+        console.log('err: ', err);
+      });
 
-    }).catch(
-      error => console.log(error)
-    );
+    }).catch((err) => {
+      this.setState({loading: false});
+      console.log('err: ', err);
+    });
   };
 
   createVoteAgainHandler = (e) => {
@@ -115,6 +120,11 @@ class Poll extends Component {
       voteButton = <Button label='VOTE' disabled={!this.state.votable} clicked={this.createVoteHandler} />;
     }
 
+    let spinner = null;
+    if (this.state.loading) {
+      spinner = <Spinner />;
+    }
+
     return(
       <div className={styles.Poll}>
         <div className={styles.Status}>Open</div>
@@ -131,6 +141,7 @@ class Poll extends Component {
           {options}
           {voteButton}
         </form>
+        {spinner}
       </div>
     );
   }
