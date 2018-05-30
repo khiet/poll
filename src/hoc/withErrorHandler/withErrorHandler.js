@@ -45,7 +45,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             <div className={styles.Heading}>
               Please sign up or log in to continue
             </div>
-            <Auth />
+            <Auth authSuccess={this.errorConfirmedHandler}/>
           </Aux>
         );
       }

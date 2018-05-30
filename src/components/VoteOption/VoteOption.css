@@ -1,8 +1,13 @@
 .VoteOption {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+
   margin-top: 1rem;
-  text-align: left;
   font-size: 1.5rem;
+}
+
+.InputContainer {
+
 }
 
 .VoteLabel {
@@ -10,8 +15,8 @@
   font-weight: bold;
 }
 
-.Result {
-  position: absolute;
-  top: 0;
-  right: 0;
+.VotedLabel {
+  composes: VoteLabel;
+
+  color: #1dcd00;
 }

@@ -1,4 +1,11 @@
-.PollBuilder {
-  width: 50%;
-  margin: auto;
+.Content {
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .Content {
+    top: 4rem;
+    left: 25%;
+    width: 50%;
+  }
 }

@@ -1,0 +1,12 @@
+.Content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ParticipantCount {
+  display: inline-block;
+  margin-top: 1rem;
+  border: 1px solid #bbb;
+  color: #bbb;
+  padding: 0.5rem 1rem;
+}

@@ -1,0 +1,17 @@
+.Content {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 1.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 2px solid #e6e6e6;
+}
+
+.Name {
+
+}
+
+.Value {
+
+}
