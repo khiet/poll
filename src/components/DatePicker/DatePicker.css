@@ -1,9 +1,12 @@
+.Content {
+  display: flex;
+  justify-content: center;
+}
+
 /* DayPicker styles */
 
 .DayPicker {
   display: inline-block;
-
-  width: inherit;
 }
 
 .DayPicker-wrapper {

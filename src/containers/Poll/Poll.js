@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 
 import styles from './Poll.css';
-import VoteOption from '../../components/VoteOption/VoteOption';
+
+import VoteOptions from '../../components/VoteOptions/VoteOptions';
+import ParticipantCount from '../../components/ParticipantCount/ParticipantCount';
 import Button from '../../components/UI/Button/Button';
 import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import User from '../../containers/User/User';
+
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
 
@@ -13,124 +18,166 @@ class Poll extends Component {
   state = {
     pollId: '',
     title: '',
-    options: [],
+    pollUserName: '',
     participantCount: 0,
+    votedVote: '',
+    voteResult: {},
     selectedOption: null,
     votable: false,
-    voted: false
+    voting: false,
+    userId: '',
+    userName: '',
+    loading: false
   }
 
   componentDidMount() {
     const pollId = this.props.match.params.id;
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
 
     axios.get(
       '/polls/' + pollId + '.json'
-    ).then((response) => {
-      const ttl  = response.data.title;
-      const opts = response.data.options;
-      const participantCnt = this.getParticipantCount(opts);
+    ).then(res => {
+      const pollUserName = res.data.userName;
+      const pollOptions = res.data.options;
+
+      axios.get(
+        '/votes.json?orderBy="pollId"&equalTo="' + pollId + '"'
+      ).then(res => {
+        const votes = res.data;
+        const participantCount = Object.keys(votes).length;
+        let votedVote = '';
+        const voteResult = {};
+
+        pollOptions.forEach(poll => {
+          voteResult[poll.value] = 0;
+        });
+
+        Object.values(votes).forEach(vote => {
+          if (vote.userId === userId) {
+            votedVote = vote.value;
+          }
+          voteResult[vote.value] += 1;
+        });
+
+        this.setState(
+          {
+            participantCount: participantCount,
+            votedVote: votedVote,
+            voteResult: voteResult
+          }
+        );
+
+      }).catch(err => {
+        console.log('err: ', err);
+      });
 
       this.setState(
         {
           pollId: pollId,
-          title: ttl,
-          options: opts,
-          participantCount: participantCnt
+          title: res.data.title,
+          userId: userId,
+          userName: userName,
+          pollUserName: pollUserName
         }
       );
 
-    }).catch(
-      error => console.log(error)
-    );
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
-  optionSelectedHandler = (e) => {
+  optionSelectedHandler = e => {
     this.setState({selectedOption: e.target.value, votable: true});
   };
 
-  createVoteHandler = (e) => {
+  voteSubmitHandler = (e) => {
     e.preventDefault();
+
+    if (this.state.userId) {
+      this.createVoteHandler(this.state.userId);
+    } else {
+      this.setState({ voting: true });
+    }
+  };
+
+  createVoteHandler = (userId) => {
+    this.setState({loading: true});
 
     const pollId = this.state.pollId;
     const vote = {
+      userId: userId,
       pollId: pollId,
       value: this.state.selectedOption
     };
 
-    axios.post(
-      '/votes.json', vote
-    ).then((response) => {
-
-      const opts = this.state.options.map((opt) => {
-        if (opt.value === vote.value) {
-          opt['total'] += 1;
-        }
-
-        return opt;
+    axios.get('/votes.json?orderBy="pollId"&equalTo="' + pollId + '"').then(res => {
+      const keys = Object.keys(res.data);
+      const foundVoteId = keys.find(voteId => {
+        return (res.data[voteId].userId === userId) && (res.data[voteId].pollId === pollId)
       });
 
-      axios.put(
-        '/polls/' + pollId + '/options.json', opts
+      if (foundVoteId) {
+        axios.delete(
+          '/votes/' + foundVoteId + '.json'
+        ).then(res => {
+          console.log('res: ', res);
+        }).catch(err => {
+          console.log('err: ', err);
+        });
+      }
+
+      axios.post(
+        '/votes.json', vote
       ).then((response) => {
-        const participantCnt = this.getParticipantCount(opts);
-        this.setState({participantCount: participantCnt, voted: true, votable: false});
+        this.setState({votable: false, loading: false});
+
         const location = {
-          pathname: '/polls/' + pollId + '/result',
-          state: { title: navigationTitles.VOTE }
+          pathname: '/polls/' + this.state.pollId + '/result',
+          state: { title: navigationTitles.RESULT }
         };
         this.props.history.push(location);
-      }).catch(
-        error => console.log(error)
-      );
 
-    }).catch(
-      error => console.log(error)
-    );
-  };
+      }).catch((err) => {
+        this.setState({loading: false});
+        console.log('err: ', err);
+      });
 
-  createVoteAgainHandler = (e) => {
-    e.preventDefault();
-
-    console.log('createVoteAgainHandler: ' + this.state.selectedOption);
-  };
-
-  getParticipantCount = (pollOptions) => {
-    return pollOptions.map((opt) => {
-      return opt['total'];
-    }).reduce((acc, val) => {
-      return acc + val;
+    }).catch(err => {
+      this.setState({loading: false});
+      console.log('err: ', err);
     });
   };
 
   render() {
+    let spinner = null;
+    if (this.state.loading) {
+      spinner = <Spinner />;
+    }
 
-    const options = this.state.options.map((opt) => {
-      return <VoteOption key={opt.value} group='vote' title={opt.value} total={opt.total} changed={this.optionSelectedHandler} />;
-    });
-
-    let voteButton = null;
-    if (this.state.voted) {
-      voteButton = <Button label='VOTE AGAIN' disabled={!this.state.votable} clicked={this.createVoteAgainHandler} />;
-    } else {
-      voteButton = <Button label='VOTE' disabled={!this.state.votable} clicked={this.createVoteHandler} />;
+    let userContainer = null;
+    if (this.state.voting) {
+      userContainer = (
+        <User
+          onSuccess={(userId) => this.createVoteHandler(userId)}
+        />
+      );
     }
 
     return(
-      <div className={styles.Poll}>
+      <div className={styles.Content}>
+        {spinner}
         <div className={styles.Status}>Open</div>
-        <h1 className={styles.Title}>
-          {this.state.title}
-        </h1>
+        <h1>{this.state.title}</h1>
         <div className={styles.CreatedBy}>
-          Created by Khiet
+          Created by {this.state.pollUserName}
         </div>
-        <div className={styles.ParticipantCount}>
-          {this.state.participantCount} participants
-        </div>
-        <form className={styles.Form}>
-          {options}
-          {voteButton}
+        <ParticipantCount count={this.state.participantCount} />
+        <form onSubmit={this.voteSubmitHandler}>
+          <VoteOptions voteResult={this.state.voteResult} changed={this.optionSelectedHandler} votedVote={this.state.votedVote} />
+          <Button label='VOTE' disabled={!this.state.votable} />
         </form>
+        {userContainer}
       </div>
     );
   }

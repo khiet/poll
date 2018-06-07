@@ -1,20 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
 import styles from './Auth.css';
 import axios from 'axios';
+import axiosPolls from '../../axios-polls';
 
 class Auth extends Component {
 
   state = {
+    name: '',
     email: '',
     password: '',
     signUp: true,
     submittable: false
   }
 
-  authenticateUser = (e) => {
+  authenticateUser = e => {
     e.preventDefault();
 
     if (this.state.signUp) {
@@ -33,14 +35,32 @@ class Auth extends Component {
 
     axios.post(
       'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.REACT_APP_FIREBASE_API_KEY, authData
-    ).then((res) => {
+    ).then(res => {
       const expiryDate = new Date(new Date().getTime() + (res.data.expiresIn * 1000));
       localStorage.setItem('token', res.data.idToken);
       localStorage.setItem('expiryDate', expiryDate);
-      localStorage.setItem('userId', res.data.localId);
+      localStorage.setItem('localId', res.data.localId);
 
-    }).catch((err) => {
-      console.log(err);
+      const user = {
+        name: this.state.name,
+        localId: res.data.localId
+      };
+
+      axiosPolls.post(
+        '/users.json', user
+      ).then(res => {
+        const userId = res.data.name;
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', this.state.name);
+
+        if (this.props.authSuccess) {
+          this.props.authSuccess();
+        }
+      }).catch(err => {
+        console.log('err: ', err);
+      });
+    }).catch(err => {
+      console.log('err: ', err);
     });
   };
 
@@ -53,26 +73,45 @@ class Auth extends Component {
 
     axios.post(
       'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + process.env.REACT_APP_FIREBASE_API_KEY, authData
-    ).then((res) => {
+    ).then(res => {
+
+      axiosPolls.get(
+        '/users.json?orderBy="localId"&equalTo="' + res.data.localId + '"'
+      ).then(res => {
+        const userId = Object.keys(res.data)[0];
+        const userName = Object.values(res.data)[0].name;
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+      }).catch(err => {
+        console.log('err: ', err);
+      });
+
       const expiryDate = new Date(new Date().getTime() + (res.data.expiresIn * 1000));
       localStorage.setItem('token', res.data.idToken);
       localStorage.setItem('expiryDate', expiryDate);
-      localStorage.setItem('userId', res.data.localId);
+      localStorage.setItem('localId', res.data.localId);
 
-    }).catch((err) => {
+      if (this.props.authSuccess) {
+        this.props.authSuccess();
+      }
+    }).catch(err => {
       console.log(err);
     });
   };
 
-  emailChangedHandler = (e) => {
+  nameChangedHandler = e => {
+    this.setState({name: e.target.value});
+  };
+
+  emailChangedHandler = e => {
     this.setState({email: e.target.value});
   };
 
-  passwordChangedHandler = (e) => {
+  passwordChangedHandler = e => {
     this.setState({password: e.target.value});
   };
 
-  switchAuth = (e) => {
+  switchAuth = e => {
     e.preventDefault();
 
     this.setState({signUp: !this.state.signUp});
@@ -87,18 +126,28 @@ class Auth extends Component {
   }
 
   render() {
+
+    let nameTextField = null;
+    if (this.state.signUp) {
+      nameTextField = (
+        <Input inputType='text'
+          placeholder='Name'
+          changed={this.nameChangedHandler}
+        />
+      );
+    }
+
     return(
-      <div className={styles.Auth}>
+      <div className={styles.Content}>
         <form onSubmit={this.authenticateUser}>
+          {nameTextField}
           <Input inputType='email'
             placeholder='Email'
-            value={this.state.email}
             changed={this.emailChangedHandler}
           />
           <Input
             inputType='password'
             placeholder='Password'
-            value={this.state.password}
             changed={this.passwordChangedHandler}
           />
           <Button label={this.state.signUp ? 'Sign Up' : 'Log In' } disabled={!this.state.submittable} />

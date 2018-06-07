@@ -35,10 +35,12 @@ const defaultClassnames = {
 
 const datePicker = (props) => {
   return(
-    <DayPicker
-      classNames={defaultClassnames}
-      onDayClick={props.clicked}
-    />
+    <div className={styles.Content}>
+      <DayPicker
+        classNames={defaultClassnames}
+        onDayClick={props.clicked}
+      />
+    </div>
   );
 };
 

@@ -5,8 +5,7 @@ import Switcher from '../../components/UI/Switcher/Switcher';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import Modal from '../../components/UI/Modal/Modal';
-import Auth from '../Auth/Auth';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
 
@@ -26,7 +25,8 @@ class PollBuilder extends Component {
     ],
     type: 'text',
     settings: [],
-    submittable: false
+    submittable: false,
+    loading: false
   };
 
   titleChangedHandler = (e) => {
@@ -56,24 +56,23 @@ class PollBuilder extends Component {
   createPollHandler = (e) => {
     e.preventDefault();
 
-    const opts = this.state.options.filter((opt) => {
-      return opt.value !== '';
-    });
-
-    // set all total to zero
-    opts.forEach((opt) => {
-      opt['total'] = 0;
-    });
+    const localId = localStorage.getItem('localId');
+    const userName = localStorage.getItem('userName');
+    const options = this.state.options.filter(opt => opt.value !== '');
 
     const poll = {
-      ...this.state,
-      options: opts
+      title: this.state.title,
+      options: options,
+      localId: localId,
+      userName: userName
     };
 
     const token = localStorage.getItem('token');
     axios.post(
       '/polls.json?auth=' + token, poll
     ).then((res) => {
+      this.setState({loading: false});
+
       if (res && res.status === 200) {
         const location = {
           pathname: '/polls/' + res.data.name,
@@ -82,21 +81,25 @@ class PollBuilder extends Component {
         this.props.history.push(location);
       }
     }).catch((err) => {
-      console.log('err: ', err);
+      this.setState({loading: false});
     });
   };
 
   switchTypeHandler = (type) => {
-    const opts = [
+    const options = [
       { value: '', id: this.randomId() },
       { value: '', id: this.randomId() }
     ];
 
-    this.setState({type: type, options: opts});
+    this.setState({type: type, options: options});
   };
 
   randomId = () => {
     return Math.floor(Math.random() * 1000000);
+  }
+
+  getPlaceholder = (index) => {
+    return index + ((this.state.type === 'text') ? '. Enter an option' : '. Enter a date');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -108,36 +111,31 @@ class PollBuilder extends Component {
 
   render() {
     const optionsToRender = this.state.options.map((opt, idx) => {
-
-      let placeholder = '';
-      if (this.state.type === 'text') {
-        placeholder = (idx + 1) + '. Enter an option';
-      } else if (this.state.type === 'date') {
-        placeholder = (idx + 1) + '. Enter a date';
-      }
-
       return(
         <PollOption
           number={idx + 1}
           key={opt.id}
           pollType={this.state.type}
-          placeholder={placeholder}
+          placeholder={this.getPlaceholder(idx + 1)}
           onOptionValueChange={(value) => this.optionChangedHandler(opt.id, value)}
         />
       );
     });
 
+    let spinner = null;
+    if (this.state.loading) {
+      spinner = <Spinner />;
+    }
+
     return(
-      <div className={styles.PollBuilder}>
+      <div className={styles.Content}>
+        {spinner}
         <Switcher clicked={this.switchTypeHandler} selectedType={this.state.type} />
         <form onSubmit={this.createPollHandler}>
           <TextArea placeholder='Enter a poll question' changed={this.titleChangedHandler} />
           {optionsToRender}
           <Button label='DONE' disabled={!this.state.submittable} />
         </form>
-        <Modal show={false}>
-          <Auth />
-        </Modal>
       </div>
     );
   }

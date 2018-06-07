@@ -44,7 +44,6 @@ class PollOption extends Component {
 
     return(
       <Aux>
-        {datePicker}
         <Input
           inputType='text'
           value={this.state.optionValue}
@@ -52,6 +51,7 @@ class PollOption extends Component {
           focused={this.showDatePickerHandler}
           placeholder={this.props.placeholder}
         />
+        {datePicker}
       </Aux>
     );
   }
