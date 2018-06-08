@@ -58,11 +58,16 @@ class PollBuilder extends Component {
 
     const localId = localStorage.getItem('localId');
     const userName = localStorage.getItem('userName');
+
+    // remove '' and dedupe
+    const optionSet = new Set();
     const options = this.state.options.filter(opt => opt.value !== '');
+    options.forEach(opt => { optionSet.add(opt.value); });
+    const pollOptions = Array.from(optionSet);
 
     const poll = {
       title: this.state.title,
-      options: options,
+      options: pollOptions,
       localId: localId,
       userName: userName
     };

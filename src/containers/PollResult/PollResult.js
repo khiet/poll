@@ -44,8 +44,8 @@ class PollResult extends Component {
         let votedVote = '';
         const voteResult = {};
 
-        pollOptions.forEach(poll => {
-          voteResult[poll.value] = 0;
+        pollOptions.forEach(pollOption => {
+          voteResult[pollOption] = 0;
         });
 
         Object.values(votes).forEach(vote => {
@@ -82,7 +82,7 @@ class PollResult extends Component {
 
   showVotesHandler = () => {
     axios.get(
-      '/votes.json'
+      '/votes.json?orderBy="pollId"&equalTo="' + this.state.pollId + '"'
     ).then(res => {
       const votes = Object.values(res.data);
       const userVote = {};

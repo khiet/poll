@@ -49,8 +49,8 @@ class Poll extends Component {
         let votedVote = '';
         const voteResult = {};
 
-        pollOptions.forEach(poll => {
-          voteResult[poll.value] = 0;
+        pollOptions.forEach(pollOption => {
+          voteResult[pollOption] = 0;
         });
 
         Object.values(votes).forEach(vote => {
