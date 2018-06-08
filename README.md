@@ -1,3 +1,6 @@
+### Set .env.development.local based on .env.example
+### Set .env.development.local based on .env.example
+
 ### Firebase Database Rules
 
 ```
@@ -20,3 +23,5 @@
   }
 }
 ```
+
+### Set Firebase Authentication Sign-in Method to Email/Password
