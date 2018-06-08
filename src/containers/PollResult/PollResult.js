@@ -10,6 +10,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Button from '../../components/UI/Button/Button';
 import UserVote from '../../components/UserVote/UserVote';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
+
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
 
 import { Link } from 'react-router-dom';
@@ -23,7 +25,8 @@ class PollResult extends Component {
     participantCount: 0,
     votedVote: '',
     userVote: {},
-    voteResult: {}
+    voteResult: {},
+    loading: false
   }
 
   componentDidMount() {
@@ -81,6 +84,7 @@ class PollResult extends Component {
   }
 
   showVotesHandler = () => {
+    this.setState({loading: true});
     axios.get(
       '/votes.json?orderBy="pollId"&equalTo="' + this.state.pollId + '"'
     ).then(res => {
@@ -91,18 +95,26 @@ class PollResult extends Component {
         axios.get(
           '/users/' + vote.userId + '.json'
         ).then(res => {
+          this.setState({loading: false});
+
           userVote[res.data.name] = vote.value;
           this.setState({ userVote: userVote });
         }).catch(err => {
+          this.setState({loading: false});
           console.log('err: ', err);
         });
       });
     }).catch(err => {
+      this.setState({loading: false});
       console.log('err: ', err);
     });
   };
 
   render() {
+    let spinner = null;
+    if (this.state.loading) {
+      spinner = <Spinner />;
+    }
 
     const voteUsers = Object.keys(this.state.userVote);
     const userVoteList = voteUsers.map(voteUser => {
@@ -112,6 +124,7 @@ class PollResult extends Component {
 
     return(
       <div className={styles.Content}>
+        {spinner}
         <div className={styles.Status}>Open</div>
         <h1>{this.state.title}</h1>
         <div className={styles.CreatedBy}>

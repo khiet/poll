@@ -16,7 +16,9 @@
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 
-  top: 4rem;
+  position: fixed;
+  top: 30vh;
+  left: calc(50% - 5em);
 }
 .Loader:before,
 .Loader:after {

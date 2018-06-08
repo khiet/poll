@@ -176,8 +176,8 @@ class Poll extends Component {
 
     return(
       <div className={styles.Content}>
-        {copyText}
         {spinner}
+        {copyText}
         <div className={styles.Status}>Open</div>
         <h1>{this.state.title}</h1>
         <div className={styles.CreatedBy}>
