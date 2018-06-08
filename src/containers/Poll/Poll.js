@@ -8,6 +8,7 @@ import Button from '../../components/UI/Button/Button';
 import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import User from '../../containers/User/User';
+import CopyText from '../../containers/CopyText/CopyText';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 
@@ -164,8 +165,18 @@ class Poll extends Component {
       );
     }
 
+    let copyText = null;
+    if (this.state.pollUserName === this.state.userName) {
+      copyText = (
+        <div className={styles.CopyTextContainer}>
+          <CopyText helpText="Copy to clipboard for sharing" value={window.location.href} />
+        </div>
+      );
+    }
+
     return(
       <div className={styles.Content}>
+        {copyText}
         {spinner}
         <div className={styles.Status}>Open</div>
         <h1>{this.state.title}</h1>

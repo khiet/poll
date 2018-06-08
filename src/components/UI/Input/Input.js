@@ -6,11 +6,13 @@ const input = (props) => {
     <input
       type={props.inputType}
       className={styles.Input}
+      id={props.id}
       value={props.value}
       placeholder={props.placeholder}
       onChange={props.changed}
       onFocus={props.focused}
       onBlur={props.blured}
+      readOnly={props.readOnly}
     />
   );
 };
