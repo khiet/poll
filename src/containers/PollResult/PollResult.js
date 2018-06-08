@@ -122,7 +122,7 @@ class PollResult extends Component {
           <VoteOptions voteResult={this.state.voteResult} votedVote={this.state.votedVote} />
         </div>
         <div className={styles.RevoteContainer}>
-          <Link className={sharedStyles.Link} to={{pathname: '/polls/' + this.state.pollId, state: {title: navigationTitles.VOTE}}}>
+          <Link className={sharedStyles.LinkSecondary} to={{pathname: '/polls/' + this.state.pollId, state: {title: navigationTitles.VOTE}}}>
             REVOTE
           </Link>
           <Button label='SHOW DETAILS' clicked={this.showVotesHandler} />

@@ -14,3 +14,17 @@
   background-color: #169a00;
   color: #e6e6e6;
 }
+
+.LinkSecondary {
+  composes: Link;
+
+  color: black;
+  background-color: white;
+  border: 2px solid black;
+}
+
+.LinkSecondary:hover {
+  border: 2px solid #666666;
+  background-color: #e6e6e6;
+  color: #666666;
+}
