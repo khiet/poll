@@ -88,6 +88,8 @@ class PollResult extends Component {
     axios.get(
       '/votes.json?orderBy="pollId"&equalTo="' + this.state.pollId + '"'
     ).then(res => {
+      this.setState({votable: false, loading: false});
+
       const votes = Object.values(res.data);
       const userVote = {};
 

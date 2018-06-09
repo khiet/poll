@@ -54,6 +54,7 @@ class PollBuilder extends Component {
   };
 
   createPollHandler = (e) => {
+    this.setState({loading: true});
     e.preventDefault();
 
     const localId = localStorage.getItem('localId');
