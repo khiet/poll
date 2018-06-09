@@ -13,17 +13,8 @@ import { Switch, Route, Link, withRouter } from 'react-router-dom';
 
 import * as navigationTitles from './components/Navigation/NavigationTitles';
 
-const debugging = (props) => {
-  console.log('this.props.history: ', props.history);
-  console.log('this.props.location: ', props.location);
-  console.log('this.props.match: ', props.match);
-  console.log('localStorage: ', localStorage);
-};
-
 class App extends Component {
   render() {
-    debugging(this.props);
-
     let navigationTitle = navigationTitles.DEFAULT;
     if (this.props.location.state) {
       navigationTitle = this.props.location.state.title;
