@@ -1,4 +1,7 @@
-## React App inspired by Poll in [Line App](https://line.me/en-US/)
+<h3 align="center">
+  React App inspired by Poll in
+  <a href="https://line.me/en-US/">Line App</a>
+</h3>
 
 ### Project setup
 
