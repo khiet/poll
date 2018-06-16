@@ -1,9 +1,20 @@
-### Set .env.development.local based on .env.example
-### Set .env.development.local based on .env.example
+## React App inspired by Poll in [Line App](https://line.me/en-US/)
 
-### Firebase Database Rules
+### Project setup
 
-```
+### .env
+
+Set .env based on .env.example
+
+`.env.development.local` for development and `.env.production.local` for deploying on production
+
+### Firebase
+
+The project assumes using Firebase for a backend.
+
+##### Set Firebase Database Rules as follows:
+
+```json
 {
   "rules": {
     "polls": {
@@ -24,4 +35,17 @@
 }
 ```
 
-### Set Firebase Authentication Sign-in Method to Email/Password
+##### Configure Firebase Authentication Sign-in Method to use Email/Password
+
+##### Hosting
+
+Follow the instructions on Firebase for Hosting. This is usually a simple two-step process using `firebase init` followed by `firebase deploy`.
+
+### Project outline
+
+This is an experimental React project, created by [create-react-app](https://github.com/facebook/create-react-app).
+
+* It uses CSS Modules
+* Backend with Firebase
+* [react-router](https://www.npmjs.com/package/react-router)
+* Test with Jest/Enzyme [TODO]
