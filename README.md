@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/khiet/poll.svg?branch=master)](https://travis-ci.org/khiet/poll)
+
 <h3 align="center">
   React App inspired by Poll in
   <a href="https://line.me/en-US/">Line App</a>
