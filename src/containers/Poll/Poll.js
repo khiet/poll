@@ -23,7 +23,7 @@ class Poll extends Component {
     participantCount: 0,
     votedVote: '',
     voteResult: {},
-    selectedOption: null,
+    selectedOption: '',
     votable: false,
     voting: false,
     userId: '',
@@ -158,11 +158,7 @@ class Poll extends Component {
 
     let userContainer = null;
     if (this.state.voting) {
-      userContainer = (
-        <User
-          onSuccess={(userId) => this.createVoteHandler(userId)}
-        />
-      );
+      userContainer = <User onSuccess={(userId) => this.createVoteHandler(userId)} />;
     }
 
     let copyText = null;

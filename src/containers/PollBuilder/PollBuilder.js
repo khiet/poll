@@ -15,7 +15,7 @@ import styles from './PollBuilder.css';
 
 // settings can contain 'deadline', 'multivote'
 // id is a random ID so that options reset on type change
-class PollBuilder extends Component {
+export class PollBuilder extends Component {
 
   state = {
     title: '',
