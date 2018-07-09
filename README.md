@@ -51,6 +51,7 @@ Follow the instructions on Firebase for Hosting. This is usually a simple two-st
 This is an experimental React project, created by [create-react-app](https://github.com/facebook/create-react-app).
 
 * It uses CSS Modules
-* Backend with Firebase
+* Backend with Firebase (Database & Authentication services)
 * [react-router](https://www.npmjs.com/package/react-router)
-* Test with Jest/Enzyme [TODO]
+* Axios for Ajax requests
+* Test with Jest & Enzyme

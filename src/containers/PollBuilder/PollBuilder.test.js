@@ -8,6 +8,12 @@ import Button from '../../components/UI/Button/Button';
 
 configure({ adapter: new Adapter() });
 
+const fillInTextField = (element, index) => {
+  element.simulate('change', {
+    target: { value: 'Answer' + index}
+  })
+};
+
 describe('<PollBuilder />', () => {
   it('should disable Button by default', () => {
     const wrapper = shallow(<PollBuilder />);
@@ -15,18 +21,22 @@ describe('<PollBuilder />', () => {
     expect(wrapper.find(Button).prop('disabled')).toEqual(true);
   });
 
+  it ('should create another field when two fields are filled in', () => {
+    const wrapper = mount(<PollBuilder />);
+
+    expect(wrapper.find("input[type='text']").length).toEqual(2);
+    wrapper.find("input[type='text']").forEach(fillInTextField);
+    expect(wrapper.find("input[type='text']").length).toEqual(3);
+  });
+
   it('should enable Button when all fields are filled in', () => {
     const wrapper = mount(<PollBuilder />);
 
     wrapper.find('textarea').simulate('change', {
-      target: { value: 'hello' }
+      target: { value: 'Question' }
     })
 
-    wrapper.find("input[type='text']").forEach((e) => {
-      e.simulate('change', {
-        target: { value: 'hello' }
-      })
-    });
+    wrapper.find("input[type='text']").forEach(fillInTextField);
 
     expect(wrapper.find(Button).prop('disabled')).toEqual(false);
   });
