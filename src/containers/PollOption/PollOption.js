@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Input from '../../components/UI/Input/Input';
-import Aux from '../../hoc/Aux/Aux';
 
 import DatePicker from '../../components/DatePicker/DatePicker';
 
@@ -43,7 +42,7 @@ class PollOption extends Component {
     }
 
     return(
-      <Aux>
+      <React.Fragment>
         <Input
           inputType='text'
           value={this.state.optionValue}
@@ -52,7 +51,7 @@ class PollOption extends Component {
           placeholder={this.props.placeholder}
         />
         {datePicker}
-      </Aux>
+      </React.Fragment>
     );
   }
 }

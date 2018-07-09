@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Modal.css';
 import Backdrop from '../Backdrop/Backdrop';
-import Aux from '../../../hoc/Aux/Aux';
 
 const modal = (props) => {
   let modalToDisplay = null;
@@ -31,10 +30,10 @@ const modal = (props) => {
   }
 
   return(
-    <Aux>
+    <React.Fragment>
       <Backdrop show={props.show} clicked={props.backdropClicked} />
       {modalToDisplay}
-    </Aux>
+    </React.Fragment>
   );
 };
 

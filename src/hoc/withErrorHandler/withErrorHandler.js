@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';
-import Aux from '../Aux/Aux';
 import Auth from '../../containers/Auth/Auth';
 
 import styles from './withErrorHandler.css';
@@ -41,17 +40,17 @@ const withErrorHandler = (WrappedComponent, axios) => {
       let modalContent = this.state.error ? this.state.error.message : null;
       if (this.state.errorStatus === 401) {
         modalContent = (
-          <Aux>
+          <React.Fragment>
             <div className={styles.Heading}>
               Please sign up or log in to continue
             </div>
             <Auth authSuccess={this.errorConfirmedHandler}/>
-          </Aux>
+          </React.Fragment>
         );
       }
 
       return (
-        <Aux>
+        <React.Fragment>
           <Modal
             backdropClicked={this.errorConfirmedHandler}
             show={this.state.error}
@@ -59,7 +58,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             {modalContent}
           </Modal>
           <WrappedComponent {...this.props} />
-        </Aux>
+        </React.Fragment>
       );
     }
   }

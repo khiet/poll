@@ -4,8 +4,6 @@ import styles from './CopyText.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
-import Aux from '../../hoc/Aux/Aux';
-
 class CopyText extends Component {
 
   copyHandler = () => {
@@ -17,7 +15,7 @@ class CopyText extends Component {
 
   render() {
     return(
-      <Aux>
+      <React.Fragment>
         <div className={styles.HelpText}>
           {this.props.helpText}
         </div>
@@ -30,7 +28,7 @@ class CopyText extends Component {
           />
           <Button label='COPY' clicked={this.copyHandler} />
         </div>
-      </Aux>
+      </React.Fragment>
     );
   }
 }
