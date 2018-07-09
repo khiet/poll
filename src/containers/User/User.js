@@ -55,20 +55,18 @@ class User extends Component {
 
   render() {
     return(
-      <Modal
-        show={this.state.showModal}
-        backdropClicked={this.hideModalHandler}
-      >
-        <div className={styles.User}>
-          <form onSubmit={this.createUserHandler}>
-            <Input
-              inputType='text'
-              placeholder='Your name'
-              changed={this.nameChangedHandler}
-            />
-            <Button label='CONFIRM AND VOTE' disabled={!this.state.submittable} />
-          </form>
+      <Modal show={this.state.showModal}>
+        <div className={styles.Heading}>
+          Please enter your name
         </div>
+        <form onSubmit={this.createUserHandler}>
+          <Input
+            inputType='text'
+            placeholder='Your name'
+            changed={this.nameChangedHandler}
+          />
+          <Button label='CONFIRM AND VOTE' disabled={!this.state.submittable} />
+        </form>
       </Modal>
     );
   }

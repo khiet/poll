@@ -139,6 +139,9 @@ class Auth extends Component {
 
     return(
       <div className={styles.Content}>
+        <div className={styles.Heading}>
+          Please sign up or log in to continue
+        </div>
         <form onSubmit={this.authenticateUser}>
           {nameTextField}
           <Input inputType='email'

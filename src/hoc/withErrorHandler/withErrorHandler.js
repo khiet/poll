@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import Modal from '../../components/UI/Modal/Modal';
 import Auth from '../../containers/Auth/Auth';
 
-import styles from './withErrorHandler.css';
-
 const withErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
     state = {
@@ -40,12 +38,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       let modalContent = this.state.error ? this.state.error.message : null;
       if (this.state.errorStatus === 401) {
         modalContent = (
-          <React.Fragment>
-            <div className={styles.Heading}>
-              Please sign up or log in to continue
-            </div>
-            <Auth authSuccess={this.errorConfirmedHandler}/>
-          </React.Fragment>
+          <Auth authSuccess={this.errorConfirmedHandler}/>
         );
       }
 
