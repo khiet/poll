@@ -61,7 +61,7 @@ class Home extends Component {
         >
           CREATE POLL
         </Link>
-      )
+      );
     }
 
     return(

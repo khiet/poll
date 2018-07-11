@@ -177,7 +177,7 @@ class Auth extends Component {
         <div className={styles.ErrorMessage}>
           {this.state.errorMessage}
         </div>
-      )
+      );
     }
 
     return(
