@@ -1,19 +1,2 @@
 .App {
 }
-
-.Content {
-  position: relative;
-  top: 2rem;
-  text-align: center;
-}
-
-@media (min-width: 640px) {
-  .Content {
-    top: 4rem;
-  }
-}
-
-.Logo {
-  width: 200px;
-  height: 200px;
-}
