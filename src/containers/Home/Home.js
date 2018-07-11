@@ -20,8 +20,17 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token') && localStorage.getItem('expiryDate') && localStorage.getItem('localId') && localStorage.getItem('userId') && localStorage.getItem('userName')) {
-      this.setState({authenticated: true});
+    // set authenticated to true if user auth items are present and has a valid expiryDate
+    if (localStorage.getItem('token') &&
+      localStorage.getItem('expiryDate') &&
+      localStorage.getItem('localId') &&
+      localStorage.getItem('userId') &&
+      localStorage.getItem('userName')) {
+
+      const expiryDate = new Date(localStorage.getItem('expiryDate'));
+      if (expiryDate > new Date()) {
+        this.setState({authenticated: true});
+      }
     }
   }
 
