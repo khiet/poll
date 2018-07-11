@@ -1,0 +1,19 @@
+.Content {
+  position: relative;
+  top: 2rem;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .Content {
+    top: 4rem;
+    left: 25%;
+    width: 50%;
+  }
+}
+
+.Logo {
+  width: 200px;
+  height: 200px;
+}

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import styles from './App.css';
-import sharedStyles from './assets/stylesheets/Shared.css';
 
-import PollBuilder from './containers/PollBuilder/PollBuilder';
+import Home from './containers/Home/Home';
 import Poll from './containers/Poll/Poll';
+import PollBuilder from './containers/PollBuilder/PollBuilder';
 import PollResult from './containers/PollResult/PollResult';
 
 import Navigation from './components/Navigation/Navigation';
-import pandaImage from './assets/images/poll-logo.png';
 
-import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 
 import * as navigationTitles from './components/Navigation/NavigationTitles';
 
@@ -27,22 +26,9 @@ class App extends Component {
           <Route path='/polls/:id/result' component={PollResult} />
           <Route path='/polls/:id' component={Poll} />
           <Route path='/polls' component={PollBuilder} />
-          <Route path='/' render={() => {
-            return(
-              <div className={styles.Content}>
-                <img src={pandaImage} alt='panda' className={styles.Logo} />
-                <h1>Ready to make a poll?</h1>
-                <Link
-                  className={sharedStyles.Link}
-                  to={{pathname: '/polls', state: {title: navigationTitles.CREATE_POLL}}}
-                >
-                  CREATE POLL
-                </Link>
-              </div>
-            );
-          }} />
-      </Switch>
-    </div>
+          <Route path='/' component={Home} />
+        </Switch>
+      </div>
     );
   }
 }

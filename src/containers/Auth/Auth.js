@@ -6,6 +6,11 @@ import styles from './Auth.css';
 import axios from 'axios';
 import axiosPolls from '../../axios-polls';
 
+// Set token, expiryDate, localId, userId and userName in localStorage
+// token is an authentication token to Firebase Database
+// expiryDate is an expiry date for token
+// localId is UUID for a Firebase Authentication user
+// userId and userName are associated with a user stored in Firebase Database
 class Auth extends Component {
 
   state = {
@@ -13,7 +18,8 @@ class Auth extends Component {
     email: '',
     password: '',
     signUp: true,
-    submittable: false
+    submittable: false,
+    errorMessage: ''
   }
 
   authenticateUser = e => {
@@ -60,6 +66,7 @@ class Auth extends Component {
         console.log('err: ', err);
       });
     }).catch(err => {
+      this.setState({errorMessage: err.response.data.error.message});
       console.log('err: ', err);
     });
   };
@@ -95,6 +102,7 @@ class Auth extends Component {
         this.props.authSuccess();
       }
     }).catch(err => {
+      this.setState({errorMessage: err.response.data.error.message});
       console.log(err);
     });
   };
@@ -114,11 +122,14 @@ class Auth extends Component {
   switchAuth = e => {
     e.preventDefault();
 
-    this.setState({signUp: !this.state.signUp});
+    this.setState({signUp: !this.state.signUp, errorMessage: ''});
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const submittable = (this.state.email !== '' && this.state.password !== '');
+    let submittable = (this.state.email !== '' && this.state.password !== '');
+    if (this.state.signUp) { // require name for signUp
+      submittable = submittable && this.state.name;
+    }
 
     if (prevState.submittable !== submittable) {
       this.setState({submittable: submittable});
@@ -131,10 +142,20 @@ class Auth extends Component {
     if (this.state.signUp) {
       nameTextField = (
         <Input inputType='text'
+          value={this.state.name}
           placeholder='Name'
           changed={this.nameChangedHandler}
         />
       );
+    }
+
+    let errorMessageContainer = null;
+    if (this.state.errorMessage) {
+      errorMessageContainer = (
+        <div className={styles.ErrorMessage}>
+          {this.state.errorMessage}
+        </div>
+      )
     }
 
     return(
@@ -142,6 +163,7 @@ class Auth extends Component {
         <div className={styles.Heading}>
           Please sign up or log in to continue
         </div>
+        {errorMessageContainer}
         <form onSubmit={this.authenticateUser}>
           {nameTextField}
           <Input inputType='email'

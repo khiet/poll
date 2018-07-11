@@ -41,10 +41,6 @@ class User extends Component {
     });
   };
 
-  hideModalHandler = () => {
-    this.setState({ showModal: false });
-  };
-
   componentDidUpdate(prevProps, prevState) {
     const submittable = (this.state.name !== '');
 
