@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import styles from './CopyText.css';
+
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 

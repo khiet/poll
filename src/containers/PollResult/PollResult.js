@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import styles from './PollResult.css';
 import sharedStyles from '../../assets/stylesheets/Shared.css';
+import axios from '../../axios-polls';
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import VoteOptions from '../../components/VoteOptions/VoteOptions';
 import ParticipantCount from '../../components/ParticipantCount/ParticipantCount';
-import axios from '../../axios-polls';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Button from '../../components/UI/Button/Button';
 import UserVote from '../../components/UserVote/UserVote';
 

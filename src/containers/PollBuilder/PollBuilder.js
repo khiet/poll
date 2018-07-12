@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 
+import styles from './PollBuilder.css';
+
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import PollOption from '../PollOption/PollOption';
 import Switcher from '../../components/UI/Switcher/Switcher';
 import Button from '../../components/UI/Button/Button';
 import TextArea from '../../components/UI/TextArea/TextArea';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
 
 import axios from '../../axios-polls';
-
-import styles from './PollBuilder.css';
 
 // settings can contain 'deadline', 'multivote'
 // id is a random ID so that options reset on type change

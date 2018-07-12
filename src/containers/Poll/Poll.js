@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 import styles from './Poll.css';
+import axios from '../../axios-polls';
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import VoteOptions from '../../components/VoteOptions/VoteOptions';
 import ParticipantCount from '../../components/ParticipantCount/ParticipantCount';
 import Button from '../../components/UI/Button/Button';
-import axios from '../../axios-polls';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import User from '../../containers/User/User';
 import CopyText from '../../containers/CopyText/CopyText';
 

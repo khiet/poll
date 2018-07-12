@@ -44,7 +44,10 @@ The project assumes using Firebase for a backend.
 
 ##### Hosting
 
-Follow the instructions on Firebase for Hosting. This is usually a simple two-step process using `firebase init` followed by `firebase deploy`.
+For hosting on firebase, follow the instructions on Firebase for Hosting.
+
+1. `npm run build`
+2. `firebase deploy`
 
 ### Project outline
 

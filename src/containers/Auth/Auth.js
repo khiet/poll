@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Input from '../../components/UI/Input/Input';
-import Button from '../../components/UI/Button/Button';
 
 import styles from './Auth.css';
 import axios from 'axios';
 import axiosPolls from '../../axios-polls';
+
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 

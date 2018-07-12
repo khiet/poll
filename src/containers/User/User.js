@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
+import styles from './User.css';
+import axios from '../../axios-polls';
+
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Modal from '../../components/UI/Modal/Modal';
-import axios from '../../axios-polls';
-
-import styles from './User.css';
 
 class User extends Component {
 

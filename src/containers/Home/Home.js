@@ -5,12 +5,13 @@ import sharedStyles from '../../assets/stylesheets/Shared.css';
 
 import homeIcon from '../../assets/images/home-icon.png';
 
+import { Link } from 'react-router-dom';
+
 import Button from '../../components/UI/Button/Button';
 import Auth from '../../containers/Auth/Auth';
 import Modal from '../../components/UI/Modal/Modal';
 
 import * as navigationTitles from '../../components/Navigation/NavigationTitles';
-import { Link } from 'react-router-dom';
 
 class Home extends Component {
 
